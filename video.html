@@ -1,0 +1,15 @@
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<video id="the-video" src="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></video>
+
+<script type="text/javascript">
+	var video = jQuery('video')[0];
+	jQuery('#the-video').click(function() {
+	    if( video.paused ) {
+	        video.play();
+	    }
+	    else {
+	        video.pause();
+	    }
+	});	
+</script>

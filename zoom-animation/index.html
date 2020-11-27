@@ -1,0 +1,26 @@
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+	function anim4k(i) {
+			jQuery('#k4').css({
+			  '-webkit-transform' : 'scale(' + i + ')',
+			  '-moz-transform'    : 'scale(' + i + ')',
+			  '-ms-transform'     : 'scale(' + i + ')',
+			  '-o-transform'      : 'scale(' + i + ')',
+			  'transform'         : 'scale(' + i + ')'
+			});
+	}
+
+var i = 0;
+jQuery( document ).ready( function() {
+	setInterval(function() { 
+		i += 0.003; 
+		if(i < 1) { anim4k(i);} }, 
+	1);
+});
+</script>
+
+<!-- <div id="k4" style="transform:scale(0.1); position: fixed; text-align: center;">4,000</div> -->
+
+<img id="k4" src="4k.png" style="transform:scale(0.1);" />
