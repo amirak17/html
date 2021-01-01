@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/css/normalize.min.css" rel="stylesheet" type="text/css" /> -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/css/foundation.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/js/vendor/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.0.3/js/foundation.min.js"></script>
+  <meta charset="utf-8">
+
+</head>
+<body>
+     
+ <a href="#" data-reveal-id="vieoModal" >Click Me For A Modal</a>
+
+  <div style="text-align: center; background-color: transparent; border: 0px; box-shadow: 0px;" id="vieoModal" class="reveal-modal" data-reveal>
+    <div id="player"></div>
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
+
+<script type="text/javascript">
+jQuery(document).foundation();
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var player;
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+        height: '565',
+        width: '1000',
+        videoId: '_v94XqFW4Qw',
+        events: {
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+      //player is playing
+    } else {
+      //player is paused
+    }
+}
+
+function stopVideo() { player.stopVideo(); }
+function playVideo() { player.playVideo(); }
+function pauseVideo() { player.pauseVideo(); }
+jQuery(document).on('opened.fndtn.reveal', '[data-reveal]', function () { playVideo(); });
+jQuery(document).on('closed.fndtn.reveal', '[data-reveal]', function () { pauseVideo(); });	
+</script>
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<!-- saved from url=(0091)https://demo.tutorialzine.com/2015/08/how-to-control-youtubes-video-player-with-javascript/ -->
+<html style="background-attachment: scroll;"><head lang="en"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>How to Control YouTube's Video Player with JavaScript</title>
+    <link rel="stylesheet" href="./How to Control YouTube&#39;s Video Player with JavaScript_files/demo.css" type="text/css">
+    <link rel="stylesheet" href="./How to Control YouTube&#39;s Video Player with JavaScript_files/icon">
+
+    <link rel="stylesheet" href="./How to Control YouTube&#39;s Video Player with JavaScript_files/default.min.css">
+    <link rel="stylesheet" href="./How to Control YouTube&#39;s Video Player with JavaScript_files/tomorrow.min.css">
+
+<style type="text/css">	#carbonads{		position: fixed;		bottom: 30px;		right: 40px;		background-color: rgba(255,255,255,0.9);		padding: 16px;		box-shadow: 2px 2px 2px rgba(0,0,0,0.1);		border-radius: 2px;		box-sizing: content-box;		width: 130px;		transition:0.3s background-color;	}	@media (max-width:900px){		#carbonads {				display:none;		}	}	#carbonads:before {		position: absolute;		content: "×";		width: 20px;		border-radius: 50%;		height: 20px;		background-color: #da2c2c;		font-family: sans-serif;		color: #fff;		text-align: center;		line-height: 20px;		font-size: 20px;		top: -8px;		right: -8px;		cursor: pointer;		opacity:0;		transition:0.3s opacity;	}	#carbonads:hover{		background-color: #fff;	}	#carbonads:hover:before{		opacity:1;	}	#carbonads a {		color: #303438 !important;		text-decoration: none !important;		font: 13px sans-serif !important;		font-weight: normal !important;		word-break: break-word;		display: block;		line-height: 1.45 !important;	}	#carbonads .carbon-img img{		border:none !important;		outline:none !important;		margin:0 auto 6px !important;	}	#carbonads a.carbon-poweredby{		display: block;		font-size: 10px !important;		color: #888 !important;		margin-top: 8px;		text-transform: uppercase;		line-height: 1 !important;	}	</style><script id="_carbonads_projs" type="text/javascript" src="./How to Control YouTube&#39;s Video Player with JavaScript_files/CKYIK5QM.json"></script></head>
+<body>
+
+<header>
+    <h1>How to Control YouTube's Video Player with JavaScript</h1>
+    <a href="https://tutorialzine.com/2015/08/how-to-control-youtubes-video-player-with-javascript/">Download</a>
+</header>
+
+<!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+
+<iframe id="video-placeholder" frameborder="0" allowfullscreen="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" title="YouTube video player" width="600" height="400" src="./How to Control YouTube&#39;s Video Player with JavaScript_files/Xa0Q0J5tOP0.html"></iframe>
+
+
+
+<div id="controls">
+
+    <ul>
+
+        <li>
+
+            <h2>Player Initialization</h2>
+
+            <pre><code class="js hljs javascript"><span class="hljs-keyword">var</span> player;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">onYouTubeIframeAPIReady</span>(<span class="hljs-params"></span>) </span>{
+    player = <span class="hljs-keyword">new</span> YT.Player(<span class="hljs-string">'video-placeholder'</span>, {
+        width: <span class="hljs-number">600</span>,
+        height: <span class="hljs-number">400</span>,
+        videoId: <span class="hljs-string">'Xa0Q0J5tOP0'</span>,
+        playerVars: {
+            color: <span class="hljs-string">'white'</span>,
+            playlist: <span class="hljs-string">'taJ60kskkns,FG0fTKAqZ5g'</span>
+        },
+        events: {
+            onReady: initialize
+        }
+    });
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initialize</span>(<span class="hljs-params"></span>)</span>{
+
+    <span class="hljs-comment">// Update the controls on load</span>
+    updateTimerDisplay();
+    updateProgressBar();
+
+    <span class="hljs-comment">// Clear any old interval.</span>
+    clearInterval(time_update_interval);
+
+    <span class="hljs-comment">// Start interval to update elapsed time display and</span>
+    <span class="hljs-comment">// the elapsed part of the progress bar every second.</span>
+    time_update_interval = setInterval(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+        updateTimerDisplay();
+        updateProgressBar();
+    }, <span class="hljs-number">1000</span>)
+
+}</code></pre>
+        </li>
+
+        <li>
+
+            <h2>Duration</h2>
+
+            <p><span id="current-time">1:12</span> / <span id="duration">4:50</span></p>
+
+            <pre><code class="js hljs javascript"><span class="hljs-comment">// This function is called by initialize()</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateTimerDisplay</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-comment">// Update current time text display.</span>
+    $(<span class="hljs-string">'#current-time'</span>).text(formatTime( player.getCurrentTime() ));
+    $(<span class="hljs-string">'#duration'</span>).text(formatTime( player.getDuration() ));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">formatTime</span>(<span class="hljs-params">time</span>)</span>{
+    time = <span class="hljs-built_in">Math</span>.round(time);
+
+    <span class="hljs-keyword">var</span> minutes = <span class="hljs-built_in">Math</span>.floor(time / <span class="hljs-number">60</span>),
+    seconds = time - minutes * <span class="hljs-number">60</span>;
+
+    seconds = seconds &lt; <span class="hljs-number">10</span> ? <span class="hljs-string">'0'</span> + seconds : seconds;
+
+    <span class="hljs-keyword">return</span> minutes + <span class="hljs-string">":"</span> + seconds;
+}</code></pre>
+
+        </li>
+
+        <li>
+
+            <h2>Progress Bar</h2>
+
+            <input type="range" id="progress-bar" value="0">
+
+            <pre><code class="js hljs javascript">$(<span class="hljs-string">'#progress-bar'</span>).on(<span class="hljs-string">'mouseup touchend'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+
+    <span class="hljs-comment">// Calculate the new time for the video.</span>
+    <span class="hljs-comment">// new time in seconds = total duration in seconds * ( value of range input / 100 )</span>
+    <span class="hljs-keyword">var</span> newTime = player.getDuration() * (e.target.value / <span class="hljs-number">100</span>);
+
+    <span class="hljs-comment">// Skip video to new time.</span>
+    player.seekTo(newTime);
+
+});
+
+<span class="hljs-comment">// This function is called by initialize()</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">updateProgressBar</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-comment">// Update the value of our progress bar accordingly.</span>
+    $(<span class="hljs-string">'#progress-bar'</span>).val((player.getCurrentTime() / player.getDuration()) * <span class="hljs-number">100</span>);
+}</code></pre>
+        </li>
+
+        <li>
+
+            <h2>Play</h2>
+            <i id="play" class="material-icons">play_arrow</i>
+
+            <pre><code class="js hljs javascript">$(<span class="hljs-string">'#play'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+
+    player.playVideo();
+
+});</code></pre>
+
+        </li>
+
+        <li>
+
+            <h2>Pause</h2>
+            <i id="pause" class="material-icons">pause</i>
+
+            <pre><code class="js hljs javascript">$(<span class="hljs-string">'#pause'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+
+    player.pauseVideo();
+
+});</code></pre>
+        </li>
+
+        <li>
+
+            <h2>Mute / Unmute</h2>
+            <i id="mute-toggle" class="material-icons">volume_up</i>
+
+            <pre><code class="js hljs javascript">$(<span class="hljs-string">'#mute-toggle'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">var</span> mute_toggle = $(<span class="hljs-keyword">this</span>);
+
+    <span class="hljs-keyword">if</span>(player.isMuted()){
+        player.unMute();
+        mute_toggle.text(<span class="hljs-string">'volume_up'</span>);
+    }
+    <span class="hljs-keyword">else</span>{
+        player.mute();
+        mute_toggle.text(<span class="hljs-string">'volume_off'</span>);
+    }
+});</code></pre>
+        </li>
+
+        <li>
+
+            <h2>Set volume</h2>
+            <input id="volume-input" type="number" max="100" min="0">
+
+            <pre><code class="js hljs javascript">$(<span class="hljs-string">'#volume-input'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    player.setVolume($(<span class="hljs-keyword">this</span>).val());
+});
+
+<span class="hljs-comment">// To get the current volume of the player use this method:</span>
+<span class="hljs-comment">// player.getVolume()</span></code></pre>
+        </li>
+
+        <li>
+
+            <h2>Speed</h2>
+            <select id="speed">
+                <option>0.25</option>
+                <option>0.5</option>
+                <option selected="selected">1</option>
+                <option>1.5</option>
+            <option>2</option>
+            </select>
+
+            <pre><code class="js hljs javascript">$(<span class="hljs-string">'#speed'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    player.setPlaybackRate($(<span class="hljs-keyword">this</span>).val());
+});
+
+<span class="hljs-comment">// To get the current playback rate for a video use this method:</span>
+<span class="hljs-comment">// player.getPlaybackRate()</span>
+
+<span class="hljs-comment">// To get all available playback rates for the current video use:</span>
+<span class="hljs-comment">// player.getAvailablePlaybackRates()</span></code></pre>
+        </li>
+
+        <li>
+
+            <h2>Quality</h2>
+            <select id="quality">
+                <option>small</option>
+                <option>medium</option>
+                <option selected="selected">large</option>
+                <option>hd720</option>
+                <option>hd1080</option>
+            <option>highres</option>
+            </select>
+
+            <pre><code class="js hljs javascript">$(<span class="hljs-string">'#quality'</span>).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    player.setPlaybackQuality($(<span class="hljs-keyword">this</span>).val());
+});
+
+<span class="hljs-comment">// To get the actual video quality of the running video use this method:</span>
+<span class="hljs-comment">// player.getPlaybackQuality()</span>
+
+<span class="hljs-comment">// To get a list of the available quality formats for a video use:</span>
+<span class="hljs-comment">// player.getAvailableQualityLevels()</span></code></pre>
+        </li>
+
+        <li>
+
+            <h2>Playlist Next</h2>
+            <i id="next" class="material-icons">fast_forward</i>
+
+            <pre><code class="js hljs javascript">$(<span class="hljs-string">'#next'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    player.nextVideo()
+});</code></pre>
+        </li>
+
+        <li>
+
+            <h2>Playlist Previous</h2>
+            <i id="prev" class="material-icons">fast_rewind</i>
+
+            <pre><code class="js hljs javascript">$(<span class="hljs-string">'#prev'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    player.previousVideo()
+});</code></pre>
+        </li>
+
+        <li>
+
+            <h2>Dynamically Queue Video</h2>
+            <img class="thumbnail" src="./How to Control YouTube&#39;s Video Player with JavaScript_files/cat_video_1.jpg" data-video-id="h14wr4pXZFk">
+            <img class="thumbnail" src="./How to Control YouTube&#39;s Video Player with JavaScript_files/cat_video_2.jpg" data-video-id="KkFnm-7jzOA">
+            <img class="thumbnail" src="./How to Control YouTube&#39;s Video Player with JavaScript_files/cat_video_3.jpg" data-video-id="Ph77yOQFihc">
+
+            <pre><code class="js hljs javascript">$(<span class="hljs-string">'.thumbnail'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+
+    <span class="hljs-keyword">var</span> url = $(<span class="hljs-keyword">this</span>).attr(<span class="hljs-string">'data-video-id'</span>);
+
+    player.cueVideoById(url);
+
+});</code></pre>
+
+        </li>
+
+    </ul>
+
+</div>
+
+
+
+<script type="text/javascript" id="www-widgetapi-script" src="./How to Control YouTube&#39;s Video Player with JavaScript_files/www-widgetapi.js" async=""></script><script src="./How to Control YouTube&#39;s Video Player with JavaScript_files/jquery.min.js"></script>
+<script src="./How to Control YouTube&#39;s Video Player with JavaScript_files/highlight.min.js"></script>
+<script src="./How to Control YouTube&#39;s Video Player with JavaScript_files/iframe_api"></script>
+<script src="./How to Control YouTube&#39;s Video Player with JavaScript_files/script.js"></script>
+
+<!-- Demo ads. Please ignore and remove. -->
+<script src="./How to Control YouTube&#39;s Video Player with JavaScript_files/v3.js" async=""></script>
+
+
+<script id="_carbonads_js" type="text/javascript" async="" src="./How to Control YouTube&#39;s Video Player with JavaScript_files/carbon.js"></script><div id="carbonads"><span><span class="carbon-wrap"><a href="https://srv.carbonads.net/ads/click/x/GTND42QUCT7IC2QJCWYLYKQMCAYD5KQECEBDKZ3JCWSIT27LC6YIEK3KC6BI5K3IC67DEK3EHJNCLSIZ?segment=placement:tutorialzinecom;" class="carbon-img" target="_blank" rel="noopener"><img src="./How to Control YouTube&#39;s Video Player with JavaScript_files/1559075156-slack-carbon-red_2x.png" alt="ads via Carbon" border="0" height="100" width="130" style="max-width: 130px;"></a><a href="https://srv.carbonads.net/ads/click/x/GTND42QUCT7IC2QJCWYLYKQMCAYD5KQECEBDKZ3JCWSIT27LC6YIEK3KC6BI5K3IC67DEK3EHJNCLSIZ?segment=placement:tutorialzinecom;" class="carbon-text" target="_blank" rel="noopener">Bring your team together with Slack, the collaboration hub for work.</a></span><a href="http://carbonads.net/?utm_source=tutorialzinecom&amp;utm_medium=ad_via_link&amp;utm_campaign=in_unit&amp;utm_term=carbon" class="carbon-poweredby" target="_blank" rel="noopener">ads via Carbon</a><img src="./How to Control YouTube&#39;s Video Player with JavaScript_files/B21259774.226230891" border="0" height="1" width="1" alt="ads via Carbon" style="display: none;"></span></div></body></html>

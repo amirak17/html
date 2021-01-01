@@ -1,0 +1,51 @@
+<style type="text/css">
+.learn-more:hover .learn-more-tooltip {
+    display: block;
+}
+
+.learn-more-tooltip {
+    display: none;
+    color: blue;
+    margin-left: 5px;
+    margin-top: 5px;
+    position: absolute;
+    z-index: 1000;
+    width: 200px;
+    border: 2px solid #ddd;
+    padding: 5px;
+    background-color: #fff;
+}  
+</style>
+
+<h3>On Hover</h3>
+
+<span class="learn-more">Send reminders?
+  <span class="learn-more-tooltip">this is the tooltip this is the tooltip this is the tooltip this is the tooltip </span>
+</span>
+
+
+<br /><br /><hr />
+
+
+<h3>On Click</h3>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery(".hasclicktip").click(function(){
+            jQuery(this).find(".clicktip").toggle();
+        });
+    });
+</script>
+
+<style>
+    .clicktip { margin-top: 20px; position: absolute; display: none; border: 1px solid #ddd; background-color: #ddeeff; padding: 3px; }
+</style>
+
+<div class="hasclicktip"><span class="clicktip">This is a tooltip</span>More Info</div>
+<div class="hasclicktip"><span class="clicktip">This is a tooltip2</span>More Info 2</div>
+
+
+

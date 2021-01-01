@@ -1,0 +1,38 @@
+<style>
+#image {
+  width: 500px;
+  height: 500px;
+}
+</style>
+
+<div id="image"></div>
+
+<script>
+var images = [
+  'https://via.placeholder.com/500x500/DDDDDD/0000FF/?text=Text1',
+  'https://via.placeholder.com/500x500/DDDDDD/0000FF/?text=Text2',
+  'https://via.placeholder.com/500x500/DDDDDD/0000FF/?text=Text3'
+];
+
+var img = document.querySelector('#image');
+var index = 0;
+var iterations = 0;
+
+var updateImage = function() {
+  if (index >= images.length) {
+    index = 0;
+    iterations++;
+  }
+
+  img.style.backgroundImage = 'url(' + images[index] + ')';
+  if (iterations >= 100) {
+    clearInterval(interval);
+  } else {
+    index++;
+  }
+}
+
+var interval = setInterval(updateImage, 1000);
+updateImage();
+
+</script>

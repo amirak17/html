@@ -1,0 +1,41 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style type="text/css">
+.text {
+  font-family: Arial;
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-dasharray: 70 330;
+  stroke-dashoffset: 0;
+  -webkit-animation: stroke 6s infinite linear;
+  animation: stroke 6s infinite linear
+}
+.thanks {
+  background-size: .2em 100%;
+  font-size: 5.6em;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0;
+  max-width: 100%
+}
+.text:nth-child(5n+1){stroke:#0084ff;-webkit-animation-delay:-1.2s;animation-delay:-1.2s}
+.text:nth-child(5n+2){stroke:#ff2619;-webkit-animation-delay:-2.4s;animation-delay:-2.4s}
+.text:nth-child(5n+3){stroke:#00ad86;-webkit-animation-delay:-3.6s;animation-delay:-3.6s}
+.text:nth-child(5n+4){stroke:#ff9306;-webkit-animation-delay:-4.8s;animation-delay:-4.8s}
+.text:nth-child(5n+5){stroke:#8ecb0d;-webkit-animation-delay:-6s;animation-delay:-6s}
+@-webkit-keyframes stroke{100%{stroke-dashoffset:-400}}
+@keyframes stroke{100%{stroke-dashoffset:-400}}
+</style>
+
+<svg class="thanks" viewBox="0 0 600 180">
+	<symbol id="s-text">
+		<text text-anchor="middle" x="50%" y="40px" dy=".35em">You're</text>
+		<text text-anchor="middle" x="50%" y="120px" dy=".35em">Awesome!</text>
+	</symbol>
+	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#s-text" class="text"></use>
+	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#s-text" class="text"></use>
+	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#s-text" class="text"></use>
+	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#s-text" class="text"></use>
+	<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#s-text" class="text"></use>
+</svg>

@@ -1,0 +1,26 @@
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    var var_no_of_adults = 0;
+    function less_adult() {
+        if(jQuery('#no_of_adults').val() != '0') {
+            var_no_of_adults = parseInt(jQuery('#no_of_adults').val());
+            var_no_of_adults = var_no_of_adults - 1;
+            jQuery('#no_of_adults').val(var_no_of_adults);
+        }
+    }
+    function add_adult() {
+        if(jQuery('#no_of_adults').val() != '30') {
+            var_no_of_adults = parseInt(jQuery('#no_of_adults').val());
+            var_no_of_adults = var_no_of_adults + 1;
+            jQuery('#no_of_adults').val(var_no_of_adults);
+        }
+    }
+
+</script>
+
+<div id="adults-children-rooms">
+    <span onclick="less_adult();" style="padding: 5px; cursor: pointer; border: 1px #ddd;" > - </span>
+        <input type="text" readonly="readonly" id="no_of_adults" name="no_of_adults" value="2" style="width: 20px; text-align: right;" />
+    <span onclick="add_adult();" style="padding: 5px; cursor: pointer; border: 1px #ddd;" > + </span> Adults
+</div>

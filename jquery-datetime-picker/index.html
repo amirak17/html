@@ -1,0 +1,27 @@
+<title>DateTime Picker</title>
+
+<!-- <link rel="stylesheet" href="jquery-ui.css"> -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="jquery-ui-timepicker-addon.css">
+
+<script src="jquery-1.12.4.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="jquery-ui-timepicker-addon.js"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+       jQuery('#the-date').datepicker();
+       jQuery('#the-datetime').datetimepicker({ 
+          dateFormat: 'yy-mm-dd',
+          hourMin: 8,
+          hourMax: 21,
+          stepMinute: 15, 
+        });
+    });
+</script>
+
+Date<br />
+<input type="text" readonly="readonly" id="the-date" name="the-date" /><br /><br />
+
+Date Time<br />
+<input type="text" readonly="readonly" id="the-datetime" name="the-datetime" />
