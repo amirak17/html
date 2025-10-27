@@ -1,0 +1,36 @@
+<style>
+    .multi-warpper { display: flex; flex-direction: column;  }
+    .multi-radio { display: none; }
+    .multi-tab { cursor: pointer; padding: 10px 20px; margin: 0px 2px; background: #fff; display: inline-block; color: #000; }
+    .multi-panels { background: #fff; width: 100%; overflow: hidden; padding: 20px; }
+    .multi-panel { display: none; }
+
+    #multi-1:checked ~ .multi-panels #multi-1-panel,
+    #multi-2:checked ~ .multi-panels #multi-2-panel,
+    #multi-3:checked ~ .multi-panels #multi-3-panel { display:block }
+
+    #multi-1:checked ~ .multi-tabs #multi-1-tab,
+    #multi-2:checked ~ .multi-tabs #multi-2-tab,
+    #multi-3:checked ~ .multi-tabs #multi-3-tab { background: #000; color: #fff;  }    
+</style>
+<div class="multi-warpper">
+    <input class="multi-radio" id="multi-1" name="group" type="radio" checked />
+    <input class="multi-radio" id="multi-2" name="group" type="radio" />
+    <input class="multi-radio" id="multi-3" name="group" type="radio" />
+    <div class="multi-tabs">
+        <label class="multi-tab" id="multi-1-tab" for="multi-1" onclick="console.log('Tab 1');">Tab 1</label>
+        <label class="multi-tab" id="multi-2-tab" for="multi-2" onclick="console.log('Tab 2');">Tab 2</label>
+        <label class="multi-tab" id="multi-3-tab" for="multi-3" onclick="console.log('Tab 3');">Tab 3</label>
+    </div>
+    <div class="multi-panels">
+        <div class="multi-panel" id="multi-1-panel">
+            <p>Tab 1 Content</p>
+        </div>
+        <div class="multi-panel" id="multi-2-panel">
+            <p>Tab 2 Content</p>
+        </div>
+        <div class="multi-panel" id="multi-3-panel">
+            <p>Tab 3 Content</p>
+        </div>
+    </div>
+</div>
